@@ -1,6 +1,6 @@
 {
   "name": "@buidly/transaction-logs-processor",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Real-time transaction logs processor",
   "main": "lib/logs.processor.js",
   "types": "lib/logs.processor.d.ts",
