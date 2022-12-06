@@ -1,15 +1,30 @@
 {
   "name": "@buidly/transaction-logs-processor",
-  "version": "1.0.0",
-  "description": "Realtime transaction logs processor",
-  "author": "",
-  "license": "UNLICENSED",
+  "version": "1.0.2",
+  "description": "Real-time transaction logs processor",
+  "main": "lib/logs.processor.js",
+  "types": "lib/logs.processor.d.ts",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
     "lint:fix": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StakeGold/transaction-logs-processor.git"
+  },
+  "keywords": [
+    "buidly",
+    "logs",
+    "transaction",
+    "processor"
+  ],
+  "author": "Buidly",
+  "license": "GPL-3.0-or-later",
   "devDependencies": {
     "@types/axios": "^0.14.0",
     "@types/node": "^16.11.10",
@@ -19,22 +34,5 @@
   },
   "dependencies": {
     "axios": "^0.21.1"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": "src",
-    "testRegex": ".*\\.spec\\.ts$",
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
-    "collectCoverageFrom": [
-      "**/*.(t|j)s"
-    ],
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
   }
 }
