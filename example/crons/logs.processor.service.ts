@@ -18,6 +18,7 @@ export class LogsProcessorService {
     Locker.lock('newLogs', async () => {
       await this.logsProcessor.start({
         elasticUrl: 'http://devnet-index.elrond.com', // devnet
+        maxLookBehindInSeconds: 100,
         getLastProcessedTimestamp: async () => {
           return this.lastTimestamp;
         },

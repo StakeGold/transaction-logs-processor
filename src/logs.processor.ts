@@ -21,10 +21,17 @@ export class LogsProcessor {
     this.isRunning = true;
 
     try {
-      const lastProcessedTimestamp = await this.getLastProcessedTimestampOrCurrent();
+      let lastProcessedTimestamp = await this.getLastProcessedTimestampOrCurrent();
       const currentTimestamp = this.getUnixTimestamp();
-      const url = `${options.elasticUrl}` ?? 'http://devnet-index.elrond.com';
-      const logs = await this.getLogs(url, lastProcessedTimestamp, currentTimestamp);
+
+      if (
+        options.maxLookBehindInSeconds &&
+        currentTimestamp - lastProcessedTimestamp > options.maxLookBehindInSeconds
+      ) {
+        lastProcessedTimestamp = currentTimestamp - options.maxLookBehindInSeconds;
+      }
+
+      const logs = await this.getLogs(options.elasticUrl, lastProcessedTimestamp, currentTimestamp);
       await this.setLastProcessedTimestamp(currentTimestamp);
 
       await this.onLogsReceived(logs, lastProcessedTimestamp, currentTimestamp);
@@ -61,7 +68,9 @@ export class LogsProcessor {
           'Content-Type': 'application/json',
         },
       });
-      return response?.data?.hits?.hits?.filter((hit: any) => hit._source).map((hit: any) => hit._source) ?? [];
+      return response?.data?.hits?.hits
+        ?.filter((hit: any) => hit._source)
+        ?.map((hit: any) => hit._source) ?? [];
     } catch (err: any) {
       this.logMessage(LogTopic.Error, err);
       return [];
@@ -117,7 +126,8 @@ export class LogsProcessor {
 }
 
 export class LogsProcessorOptions {
-  elasticUrl?: string;
+  elasticUrl: string = '';
+  maxLookBehindInSeconds?: number;
   onLogsReceived?: (logs: TransactionLog[], startTimestamp: number, endTimestamp: number) => Promise<void>;
   getLastProcessedTimestamp?: () => Promise<number | undefined>;
   setLastProcessedTimestamp?: (timestamp: number) => Promise<void>;
