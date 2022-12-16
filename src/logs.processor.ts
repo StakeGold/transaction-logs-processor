@@ -68,6 +68,7 @@ export class LogsProcessor {
           'Content-Type': 'application/json',
         },
       });
+
       return response?.data?.hits?.hits
         ?.filter((hit: any) => hit._source)
         ?.map((hit: any) => hit._source) ?? [];

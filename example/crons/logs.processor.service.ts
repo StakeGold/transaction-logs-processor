@@ -1,6 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
-
 import { LogsProcessor, TransactionLog } from '../../src/logs.processor';
 import { Locker } from '../utils/locker';
 
